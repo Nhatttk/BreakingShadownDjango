@@ -10,6 +10,7 @@ router.register(r"user-profiles", UserProfileViewSet, basename="user-profile")
 router.register(r"categories", CategoryViewSet)
 router.register(r"experts", ExpertViewSet)
 router.register(r"emergency-help", EmergencyHelpViewSer)
+router.register(r"knowledge", KnowledgeViewSet)
 # GET /profiles/: lấy danh sách tất cả profile.
 # POST /profiles/: tạo một profile mới.
 # GET /profiles/{id}/: lấy thông tin chi tiết của một profile theo ID.
@@ -22,4 +23,5 @@ urlpatterns = [
     path("login/", CustomTokenObtainPairView.as_view(), name="login"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("get-user/", CustomTokenVerifyView.as_view(), name="token_verify"),
+    path("send-email/", SendEmailView.as_view(), name="send-email"),
 ]

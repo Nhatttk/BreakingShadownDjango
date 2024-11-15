@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-u!tt*=*e=14p^9@=c(qotm!d02av=cy8__aasoqxv1n-zi3lud
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -107,6 +107,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"  # Hoặc sử dụng SMTP của nhà cung cấp khác
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "tiktokuk1205@gmail.com"  # Email của bạn
+EMAIL_HOST_PASSWORD = "vygk yqpi splp yibr"  # Mật khẩu ứng dụng hoặc mật khẩu email
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
