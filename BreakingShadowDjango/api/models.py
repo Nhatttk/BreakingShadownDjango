@@ -1,12 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
 # Create your models here.
 class Profile(models.Model):
-    phone = models.CharField(max_length=15, blank=True, null=True)
+    phone = models.CharField(max_length=15, blank=True, null=True)  
     address = models.CharField(max_length=255, blank=True, null=True)
-    birth_day = models.DateField(blank=True, null=True)
+    birth_day = models.DateField(blank=True, null=True)  
     gender = models.BooleanField(default=True)
     avatar = models.ImageField(
         upload_to="images/avatars/",
@@ -19,25 +18,6 @@ class Profile(models.Model):
     user = models.OneToOneField(
         User, related_name="user_w_profile", on_delete=models.CASCADE, primary_key=True
     )
-
-
-class Knowledge(models.Model):
-    title = models.CharField(max_length=255)
-    image = models.ImageField(
-        upload_to="images/knowledge/",
-        null=True,
-        blank=True,
-    )
-    short_description = models.CharField(max_length=255, blank=True, null=True)
-    content = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    user = models.OneToOneField(
-        User, related_name="user_w_knowledge", on_delete=models.CASCADE, primary_key=True
-    )
-
-    def __str__(self):
-        return self.title
 
 
 class Category(models.Model):
@@ -53,7 +33,6 @@ class Category(models.Model):
 
 class Expert(models.Model):
     jobTitle = models.CharField(max_length=255)
-    avatar = models.ImageField(upload_to="experts/", null=True, blank=True)
     bio = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     rating = models.FloatField()
@@ -61,10 +40,8 @@ class Expert(models.Model):
     user = models.OneToOneField(
         User, related_name="user_w_expert", on_delete=models.CASCADE, primary_key=True
     )
-
     def __str__(self):
         return self.jobTitle
-
 
 class EmergencyHelp(models.Model):
     name = models.CharField(max_length=255)
@@ -73,24 +50,3 @@ class EmergencyHelp(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class Stories(models.Model):
-    title = models.CharField(max_length=255)
-    image = models.ImageField(
-        upload_to="images/stories/",
-        null=True,
-        blank=True,
-    )
-    content = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    user = models.OneToOneField(
-        User,
-        related_name="user_w_stories",
-        on_delete=models.CASCADE,
-        primary_key=True,
-    )
-
-    def __str__(self):
-        return self.title
