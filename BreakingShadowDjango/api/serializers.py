@@ -77,18 +77,45 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ExpertSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
     class Meta:
         model = Expert
         fields = [
             "jobTitle",
+            "avatar",
             "address",
             "rating",
             "reviews",
             "user"
         ]
 
-        
+
 class EmergencyHelpSerializer(serializers.ModelSerializer): 
     class Meta:
         model = EmergencyHelp
         fields = '__all__'
+
+
+class KnowledgeSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    class Meta:
+        model = Knowledge
+        fields = [
+            "title",
+            "image",
+            "short_description",
+            "content",
+            "created_at",
+            "updated_at",
+            "user"
+        ]
+
+
+class EmailSerializer(serializers.Serializer):
+    subject = serializers.CharField(max_length=200)
+    message = serializers.CharField()
+    ip = serializers.CharField()
+    recipient_email = serializers.ListField(
+        child=serializers.EmailField(),  # Each item in the list must be a valid email
+        allow_empty=False,
+    )
