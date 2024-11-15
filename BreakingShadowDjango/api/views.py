@@ -88,3 +88,48 @@ class ExpertViewSet(viewsets.ModelViewSet):
 class EmergencyHelpViewSer(viewsets.ModelViewSet):
     queryset = EmergencyHelp.objects.all()
     serializer_class = EmergencyHelpSerializer
+
+
+class KnowledgeViewSet(viewsets.ModelViewSet):
+    queryset = Knowledge.objects.all()
+    serializer_class = KnowledgeSerializer
+
+from django.core.mail import send_mail
+from django.core.mail import EmailMessage
+
+class SendEmailView(APIView):
+    def post(self, request):
+        serializer = EmailSerializer(data=request.data)
+        if serializer.is_valid():
+            subject = serializer.validated_data["subject"]
+            message = serializer.validated_data["message"]
+            ip = serializer.validated_data["ip"]
+            recipient_email = serializer.validated_data["recipient_email"]
+
+            # Định dạng message dưới dạng HTML
+            html_message = f"""
+            <html>
+            <body>
+                <h2>{subject}</h2>
+                <p>{message}</p>
+                <p>My ip: {ip}</p>
+                <p>Thank you for using our service!</p>
+            </body>
+            </html> """
+
+            try:
+                email = EmailMessage(
+                    subject, html_message, "your-email@gmail.com", recipient_email
+                )
+                email.content_subtype = "html"  # Đặt định dạng HTML cho nội dung email
+                email.send()
+                return Response(
+                    {"status": "Email sent successfully!"}, status=status.HTTP_200_OK
+                )
+            except Exception as e:
+                return Response(
+                    {"status": "Error sending email", "error": str(e)},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
