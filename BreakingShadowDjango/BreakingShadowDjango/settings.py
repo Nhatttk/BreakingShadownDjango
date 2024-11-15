@@ -112,7 +112,7 @@ EMAIL_HOST = "smtp.gmail.com"  # Hoặc sử dụng SMTP của nhà cung cấp k
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "tiktokuk1205@gmail.com"  # Email của bạn
-EMAIL_HOST_PASSWORD = "vygk yqpi splp yibr"  # Mật khẩu ứng dụng hoặc mật khẩu email
+  # Mật khẩu ứng dụng hoặc mật khẩu email
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # Internationalization
