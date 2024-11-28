@@ -32,8 +32,8 @@ class Knowledge(models.Model):
     content = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    user = models.OneToOneField(
-        User, related_name="user_w_knowledge", on_delete=models.CASCADE, primary_key=True
+    user = models.ForeignKey(
+        User, related_name="user_knowledges", on_delete=models.CASCADE
     )
 
     def __str__(self):
@@ -94,3 +94,18 @@ class Stories(models.Model):
 
     def __str__(self):
         return self.title
+    
+class PrivateChat(models.Model):
+    user1 = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='chats_as_user1')
+    user2 = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='chats_as_user2')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user1', 'user2')  # Đảm bảo không tạo trùng chat giữa 2 user
+
+class Message(models.Model):
+    chat = models.ForeignKey(PrivateChat, on_delete=models.CASCADE, related_name='messages')
+    sender = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+

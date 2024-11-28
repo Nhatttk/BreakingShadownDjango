@@ -16,11 +16,12 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    user_id = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    # user_id = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    user = UserSerializer()
 
     class Meta:
         model = Profile
-        fields = ["address", "phone", "avatar", "user_id"]
+        fields = ["address", "phone", "avatar", "user"]
 
     def create(self, validated_data):
         # Lấy dữ liệu user từ validated_data
@@ -119,3 +120,19 @@ class EmailSerializer(serializers.Serializer):
         child=serializers.EmailField(),  # Each item in the list must be a valid email
         allow_empty=False,
     )
+
+
+class MessageSerializer(serializers.ModelSerializer):
+    sender = UserProfileSerializer()
+    class Meta:
+        model = Message
+        fields = ['chat', 'sender', 'content', 'timestamp']
+
+class PrivateChatSerializer(serializers.ModelSerializer):
+    user1 = UserProfileSerializer()
+    user2 = UserProfileSerializer()
+    messages = MessageSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = PrivateChat
+        fields = ['id', 'user1', 'user2', 'messages']
