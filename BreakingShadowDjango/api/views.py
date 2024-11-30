@@ -191,3 +191,10 @@ class MessageView(APIView):
         message = Message.objects.create(chat=chat, sender=sender, content=content)
         serializer = MessageSerializer(message)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+
+class ExpertUserViewSet(APIView):
+    def get(self, request):
+        experts = Profile.objects.filter(is_expert = True)
+        serializer = UserProfileSerializer(experts, many=True)
+        return Response(serializer.data)

@@ -35,7 +35,6 @@ class Knowledge(models.Model):
     user = models.ForeignKey(
         User, related_name="user_knowledges", on_delete=models.CASCADE
     )
-
     def __str__(self):
         return self.title
 

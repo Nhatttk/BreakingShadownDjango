@@ -25,6 +25,7 @@ urlpatterns = [
     path("login/", CustomTokenObtainPairView.as_view(), name="login"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("get-user/", CustomTokenVerifyView.as_view(), name="token_verify"),
+    path("get-expert-user/", ExpertUserViewSet.as_view(), name="expert_user"),
     path("send-email/", SendEmailView.as_view(), name="send-email"),
     path('chats/<str:username>/', PrivateChatView.as_view(), name='private_chat'),
     path('chats/<int:chat_id>/messages/', MessageView.as_view(), name='chat_messages'),
