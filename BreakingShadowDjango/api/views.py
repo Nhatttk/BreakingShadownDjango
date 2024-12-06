@@ -198,3 +198,18 @@ class ExpertUserViewSet(APIView):
         experts = Profile.objects.filter(is_expert = True)
         serializer = UserProfileSerializer(experts, many=True)
         return Response(serializer.data)
+    
+class StoriesViewSet(APIView):
+    def get(self, request):
+        stories = Stories.objects.all()
+        serializer = StoriesSerializer(stories, many=True)
+        return Response(serializer.data)
+    
+    def post(self, request):
+        serializer = StoriesPostSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                {"message": "Story created successfully"}, status=status.HTTP_201_CREATED
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

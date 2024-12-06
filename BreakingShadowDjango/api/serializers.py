@@ -136,3 +136,17 @@ class PrivateChatSerializer(serializers.ModelSerializer):
     class Meta:
         model = PrivateChat
         fields = ['id', 'user1', 'user2', 'messages']
+
+class StoriesSerializer(serializers.ModelSerializer):
+
+    profile = UserProfileSerializer()
+
+    class Meta:
+        model = Stories
+        fields = ['title', 'image', 'content', 'created_at', 'updated_at', 'profile']
+
+class StoriesPostSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Stories
+        fields = ['title', 'image', 'content', 'created_at', 'updated_at', 'profile']

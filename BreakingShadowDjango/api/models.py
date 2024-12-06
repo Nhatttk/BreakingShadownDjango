@@ -20,6 +20,9 @@ class Profile(models.Model):
         User, related_name="user_w_profile", on_delete=models.CASCADE, primary_key=True
     )
 
+    def __str__(self):
+        return self.user.username
+
 
 class Knowledge(models.Model):
     title = models.CharField(max_length=255)
@@ -84,9 +87,9 @@ class Stories(models.Model):
     content = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    user = models.OneToOneField(
-        User,
-        related_name="user_w_stories",
+    profile = models.OneToOneField(
+        Profile,
+        related_name="profile_w_stories",
         on_delete=models.CASCADE,
         primary_key=True,
     )
