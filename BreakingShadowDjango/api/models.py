@@ -87,11 +87,10 @@ class Stories(models.Model):
     content = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    profile = models.OneToOneField(
+    profile = models.ForeignKey(
         Profile,
         related_name="profile_w_stories",
-        on_delete=models.CASCADE,
-        primary_key=True,
+        on_delete=models.CASCADE
     )
 
     def __str__(self):
